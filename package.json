@@ -1,0 +1,33 @@
+{
+  "name": "goommer-rango",
+  "version": "1.0.0",
+  "description": "API RESTful capaz de gerenciar os restaurantes e os produtos do seu cardápio.",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "start": "node ./dist/index.cjs",
+    "dev": "tsx watch src/index.ts",
+    "build": "tsup src",
+    "pull": "npx prisma db pull",
+    "generate": "npx prisma generate"
+  },
+  "keywords": [],
+  "author": "Matheus Aurélio",
+  "license": "ISC",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.13.1",
+    "@typescript-eslint/parser": "^6.13.1",
+    "eslint": "^8.54.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.29.0",
+    "prisma": "^5.6.0",
+    "tsup": "^8.0.1",
+    "tsx": "^4.6.1",
+    "typescript": "^5.3.2"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.6.0",
+    "dotenv": "^16.3.1",
+    "fastify": "^4.24.3"
+  }
+}
