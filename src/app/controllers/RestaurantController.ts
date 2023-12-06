@@ -39,6 +39,22 @@ class RestaurantController {
     reply.send({ message: 'Restaurante cadastrado com sucesso' });
   }
 
+  async update(request: FastifyRequest, reply: FastifyReply) {
+    const { id } = request.params;
+
+    const data = request.body;
+
+    const restaurant = await RestaurantRepository.findById(id);
+
+    if (!restaurant) {
+      return reply.status(404).send({ message: 'Restaurante não encontrado' });
+    }
+
+    await RestaurantRepository.update(id, data);
+
+    reply.status(202).send({ message: 'Restaurante atualizado com sucesso' });
+  }
+
   async delete(request: FastifyRequest, reply: FastifyReply) {
     const { id } = request.params;
 

@@ -10,6 +10,7 @@ const port = process.env.PORT || 3333;
 fastify.get('/restaurants', RestaurantController.index);
 fastify.get('/restaurants/:id', RestaurantController.show);
 fastify.post('/restaurants', RestaurantController.store);
+fastify.patch('/restaurants/:id', RestaurantController.update);
 fastify.delete('/restaurants/:id', RestaurantController.delete);
 
 try {
