@@ -33,6 +33,12 @@ class RestaurantRepository {
 
     return newRestaurant;
   }
+
+  async remove(id: string) {
+    await prisma.tbl_restaurants.delete({
+      where: { id }
+    });
+  }
 }
 
 export default new RestaurantRepository();

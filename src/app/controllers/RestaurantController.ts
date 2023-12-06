@@ -38,6 +38,20 @@ class RestaurantController {
 
     reply.send({ message: 'Restaurante cadastrado com sucesso' });
   }
+
+  async delete(request: FastifyRequest, reply: FastifyReply) {
+    const { id } = request.params;
+
+    const restaurant = await RestaurantRepository.findById(id);
+
+    if (!restaurant) {
+      return reply.status(404).send({ message: 'Restaurante não encontrado' });
+    }
+
+    await RestaurantRepository.remove(id);
+
+    reply.status(202).send({ message: 'Restaurante deletado com sucesso' });
+  }
 }
 
 export default new RestaurantController();
