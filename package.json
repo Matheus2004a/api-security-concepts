@@ -9,6 +9,7 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsup src",
     "pull": "npx prisma db pull",
+    "push": "npx prisma db push",
     "generate": "npx prisma generate"
   },
   "keywords": [],

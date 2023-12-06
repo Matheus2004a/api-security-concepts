@@ -31,7 +31,7 @@ model tbl_products {
 model tbl_restaurants {
   id            String         @id @db.VarChar(45)
   name          String         @db.VarChar(45)
-  photo         String         @db.VarChar(45)
+  photo         String?         @db.VarChar(45)
   street        String         @db.VarChar(45)
   street_number Int
   street_comp   String?        @db.VarChar(45)

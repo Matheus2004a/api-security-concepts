@@ -9,5 +9,12 @@ const port = process.env.PORT || 3333;
 
 fastify.get('/restaurants', RestaurantController.index);
 fastify.get('/restaurants/:id', RestaurantController.show);
+fastify.post('/restaurants', RestaurantController.store);
 
-fastify.listen(port, () => console.log(`Server is running at http://localhost:${port}`));
+try {
+  fastify.listen({ port });
+
+  console.log(`Server is running at http://localhost:${port}`);
+} catch (error) {
+  fastify.log.error(error);
+}

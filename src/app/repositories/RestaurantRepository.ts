@@ -1,5 +1,7 @@
+import { randomUUID } from 'node:crypto';
 
 import { prisma } from '../../lib/prisma';
+import { CreateUser } from '../../types/User';
 
 class RestaurantRepository {
   async listAll() {
@@ -13,6 +15,23 @@ class RestaurantRepository {
     });
 
     return restaurant;
+  }
+
+  async register(data: CreateUser) {
+    const newRestaurant = await prisma.tbl_restaurants.create({
+      data: {
+        id: randomUUID(),
+        name: data.name,
+        photo: data.photo || null,
+        street: data.street,
+        street_number: data.street_number,
+        street_comp: data.street_comp || null,
+        date_open: data.date_open,
+        date_close: data.date_close
+      }
+    });
+
+    return newRestaurant;
   }
 }
 

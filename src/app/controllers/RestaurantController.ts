@@ -24,6 +24,20 @@ class RestaurantController {
 
     return restaurant;
   }
+
+  async store(request: FastifyRequest, reply: FastifyReply) {
+    const {
+      name, street, street_number,
+      street_comp, date_open, date_close
+    } = request.body;
+
+    await RestaurantRepository.register({
+      name, street, street_number, street_comp,
+      date_open, date_close
+    });
+
+    reply.send({ message: 'Restaurante cadastrado com sucesso' });
+  }
 }
 
 export default new RestaurantController();
