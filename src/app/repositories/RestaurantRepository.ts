@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 
 import { prisma } from '../../lib/prisma';
-import { CreateUser } from '../../types/User';
+import { CreateRestaurant } from '../../types/Restaurant';
 
 class RestaurantRepository {
   async listAll() {
@@ -17,7 +17,7 @@ class RestaurantRepository {
     return restaurant;
   }
 
-  async register(data: CreateUser) {
+  async register(data: CreateRestaurant) {
     const newRestaurant = await prisma.tbl_restaurants.create({
       data: {
         id: randomUUID(),
@@ -34,7 +34,7 @@ class RestaurantRepository {
     return newRestaurant;
   }
 
-  async update(id: string, data: CreateUser) {
+  async update(id: string, data: CreateRestaurant) {
     await prisma.tbl_restaurants.update({
       where: { id },
       data: {

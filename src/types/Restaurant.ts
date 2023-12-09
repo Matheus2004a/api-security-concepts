@@ -1,4 +1,4 @@
-export interface CreateUser {
+export interface IRestaurant {
   name: string;
   photo?: string;
   street: string;
