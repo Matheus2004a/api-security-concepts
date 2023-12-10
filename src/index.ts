@@ -17,6 +17,9 @@ fastify.delete('/restaurants/:id', RestaurantController.delete);
 
 fastify.get('/products', ProductsController.index);
 fastify.get('/products/:id', ProductsController.show);
+fastify.post('/products', ProductsController.store);
+fastify.patch('/products/:id', ProductsController.update);
+fastify.delete('/products/:id', ProductsController.delete);
 
 fastify.get('/categories', CategoryController.index);
 fastify.get('/categories/:id', CategoryController.show);

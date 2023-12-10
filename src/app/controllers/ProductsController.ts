@@ -25,9 +25,40 @@ class ProductsController {
   }
 
   async store(request: FastifyRequest, reply: FastifyReply) {
-    const { name, price, category, restaurant_id } = request.body;
+    const { name, price, category_id, restaurant_id } = request.body;
 
-    
+    await ProductsRepository.register({ name, price, category_id, restaurant_id });
+
+    reply.status(201).send({ message: 'Produto cadastrado com sucesso' });
+  }
+
+  async update(request: FastifyRequest, reply: FastifyReply) {
+    const { id } = request.params;
+    const { name, price, category_id, restaurant_id } = request.body;
+
+    const product = await ProductsRepository.findById(id);
+
+    if (!product) {
+      return reply.status(404).send({ message: 'Produto não encontrado' });
+    }
+
+    await ProductsRepository.update(id, { name, price, category_id, restaurant_id });
+
+    reply.status(202).send({ message: 'Produto atualizado com sucesso' });
+  }
+
+  async delete(request: FastifyRequest, reply: FastifyReply) {
+    const { id } = request.params;
+
+    const product = await ProductsRepository.findById(id);
+
+    if (!product) {
+      return reply.status(404).send({ message: 'Produto não encontrado' });
+    }
+
+    await ProductsRepository.delete(id);
+
+    reply.status(202).send({ message: 'Produto deletado com sucesso' });
   }
 }
 

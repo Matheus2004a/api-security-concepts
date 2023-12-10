@@ -23,13 +23,37 @@ class RestaurantRepository {
         id: randomUUID(),
         name: data.name,
         price: data.price,
-        photo: data.photo,
+        photo: data.photo || null,
         tbl_categories_id: data.category_id,
         tbl_restaurants_id: data.restaurant_id
       }
     });
 
     return newProduct;
+  }
+
+  async update(id: string, data: IProduct) {
+    const productUpdated = await prisma.tbl_products.update({
+      where: { id },
+      data: {
+        id: randomUUID(),
+        name: data.name,
+        price: data.price,
+        photo: data.photo || null,
+        tbl_categories_id: data.category_id,
+        tbl_restaurants_id: data.restaurant_id
+      }
+    });
+
+    return productUpdated;
+  }
+
+  async delete(id: string) {
+    const productDeleted = await prisma.tbl_products.delete({
+      where: { id }
+    });
+
+    return productDeleted;
   }
 }
 
