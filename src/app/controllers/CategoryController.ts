@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 
 import CategoryRepository from '../repositories/CategoryRepository';
 
-class RestaurantController {
+class CategoryController {
   async index(request: FastifyRequest, reply: FastifyReply) {
     const categories = await CategoryRepository.listAll();
 
@@ -30,7 +30,7 @@ class RestaurantController {
 
     await CategoryRepository.register(name);
 
-    reply.send({ message: 'Categoria criada com sucesso' });
+    reply.status(201).send({ message: 'Categoria criada com sucesso' });
   }
 
   async update(request: FastifyRequest, reply: FastifyReply) {
@@ -64,4 +64,4 @@ class RestaurantController {
   }
 }
 
-export default new RestaurantController();
+export default new CategoryController();

@@ -36,7 +36,7 @@ class RestaurantController {
       date_open, date_close
     });
 
-    reply.send({ message: 'Restaurante cadastrado com sucesso' });
+    reply.status(201).send({ message: 'Restaurante cadastrado com sucesso' });
   }
 
   async update(request: FastifyRequest, reply: FastifyReply) {
