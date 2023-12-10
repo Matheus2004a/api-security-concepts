@@ -16,7 +16,7 @@ model tbl_categories {
 model tbl_products {
   id                 String          @id @db.VarChar(45)
   name               String          @db.VarChar(45)
-  photo              String?          @db.VarChar(45)
+  photo              String?         @db.VarChar(45)
   price              Decimal         @db.Decimal(10, 2)
   tbl_restaurants_id String          @db.VarChar(45)
   tbl_categories_id  String          @db.VarChar(45)
@@ -28,13 +28,28 @@ model tbl_products {
 }
 
 model tbl_restaurants {
-  id            String         @id @db.VarChar(45)
-  name          String         @db.VarChar(45)
+  id            String          @id @db.VarChar(45)
+  name          String          @db.VarChar(45)
   photo         String?         @db.VarChar(45)
-  street        String         @db.VarChar(45)
+  street        String          @db.VarChar(45)
   street_number Int
-  street_comp   String?        @db.VarChar(45)
-  date_open     DateTime       @db.DateTime(0)
-  date_close    DateTime       @db.DateTime(0)
+  street_comp   String?         @db.VarChar(45)
+  date_open     DateTime        @db.DateTime(0)
+  date_close    DateTime        @db.DateTime(0)
+  tbl_employees tbl_employees[]
   tbl_products  tbl_products[]
+}
+
+model tbl_employees {
+  id                 String          @id @db.VarChar(45)
+  name               String          @db.VarChar(45)
+  email              String          @unique(map: "email_UNIQUE") @db.VarChar(45)
+  role               String          @default("Client") @db.VarChar(45)
+  password           String          @db.LongText
+  date_hired         DateTime        @db.DateTime(0)
+  date_fired         DateTime?       @db.DateTime(0)
+  tbl_restaurants_id String          @db.VarChar(45)
+  tbl_restaurants    tbl_restaurants @relation(fields: [tbl_restaurants_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_tbl_emplooyes_tbl_restaurants1")
+
+  @@index([tbl_restaurants_id], map: "fk_tbl_emplooyes_tbl_restaurants1_idx")
 }
