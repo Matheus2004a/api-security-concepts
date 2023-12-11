@@ -51,7 +51,7 @@ class EmployeeController {
     const employee = await EmployeeRepository.findByEmail(email);
 
     if (!employee) {
-      return reply.status(404).send({ message: 'Funcionário não encontrado' });
+      return reply.status(401).send({ message: 'Falha de autenticação' });
     }
 
     const isPasswordCorrect = await bcrypt.compare(password, employee.password);

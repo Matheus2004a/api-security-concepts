@@ -1,3 +1,4 @@
+import rateLimit from '@fastify/rate-limit';
 import * as dotenv from 'dotenv';
 
 import CategoryController from './app/controllers/CategoryController';
@@ -9,6 +10,11 @@ import { fastify } from './lib/fastify';
 dotenv.config();
 
 const port = process.env.PORT || 3333;
+
+await fastify.register(rateLimit, {
+  max: 10,
+  timeWindow: 5 * 60 * 1000
+});
 
 fastify.get('/restaurants', RestaurantController.index);
 fastify.get('/restaurants/:id', RestaurantController.show);
