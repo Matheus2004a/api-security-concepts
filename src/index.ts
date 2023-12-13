@@ -1,12 +1,11 @@
 import rateLimit from '@fastify/rate-limit';
 import * as dotenv from 'dotenv';
 
-import CategoryController from './app/controllers/CategoryController';
-import EmployeeController from './app/controllers/EmployeeController';
-import ProductsController from './app/controllers/ProductsController';
-import RestaurantController from './app/controllers/RestaurantController';
-import { privateRoutes } from './app/plugins/privateRoutes';
 import { fastify } from './lib/fastify';
+import { categoriesRoutes } from './routes/categoriesRoutes';
+import { employeesRoutes } from './routes/employeesRoutes';
+import { productsRoutes } from './routes/productsRoutes';
+import { restaurantsRoutes } from './routes/restaurantsRoutes';
 
 dotenv.config();
 
@@ -17,34 +16,10 @@ await fastify.register(rateLimit, {
   timeWindow: 5 * 60 * 1000
 });
 
-fastify.get('/restaurants', RestaurantController.index);
-fastify.get('/restaurants/:id', RestaurantController.show);
-fastify.post('/restaurants', RestaurantController.store);
-fastify.patch('/restaurants/:id', RestaurantController.update);
-fastify.delete('/restaurants/:id', RestaurantController.delete);
-
-fastify.get('/products', ProductsController.index);
-fastify.get('/products/:id', ProductsController.show);
-fastify.post('/products', ProductsController.store);
-fastify.patch('/products/:id', ProductsController.update);
-fastify.delete('/products/:id', ProductsController.delete);
-
-fastify.get('/categories', CategoryController.index);
-fastify.get('/categories/:id', CategoryController.show);
-fastify.post('/categories', CategoryController.store);
-fastify.put('/categories/:id', CategoryController.update);
-fastify.delete('/categories/:id', CategoryController.delete);
-
-fastify.get('/employees', EmployeeController.index);
-fastify.get('/employees/:id', EmployeeController.show);
-
-fastify.post('/employees', {
-  preHandler: privateRoutes
-}, EmployeeController.store);
-
-fastify.post('/employees/login', EmployeeController.login);
-fastify.put('/employees/:id', EmployeeController.update);
-fastify.delete('/employees/:id', EmployeeController.delete);
+fastify.register(restaurantsRoutes);
+fastify.register(productsRoutes);
+fastify.register(categoriesRoutes);
+fastify.register(employeesRoutes);
 
 try {
   fastify.listen({ port });

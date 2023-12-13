@@ -52,7 +52,7 @@ class EmployeeController {
   }
 
   async login(request: FastifyRequest, reply: FastifyReply) {
-    const { name, email, password } = request.body;
+    const { email, password } = request.body;
 
     const employee = await EmployeeRepository.findByEmail(email);
 
@@ -66,7 +66,7 @@ class EmployeeController {
       return reply.status(401).send({ message: 'Senha incorreta' });
     }
 
-    const token = jwt.sign({ name, email, role: employee.role }, process.env.SECRET_KEY, {
+    const token = jwt.sign({ email, role: employee.role }, process.env.SECRET_KEY, {
       expiresIn: '5min'
     });
 
