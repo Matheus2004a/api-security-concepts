@@ -5,6 +5,7 @@ import CategoryController from './app/controllers/CategoryController';
 import EmployeeController from './app/controllers/EmployeeController';
 import ProductsController from './app/controllers/ProductsController';
 import RestaurantController from './app/controllers/RestaurantController';
+import { privateRoutes } from './app/plugins/privateRoutes';
 import { fastify } from './lib/fastify';
 
 dotenv.config();
@@ -36,7 +37,11 @@ fastify.delete('/categories/:id', CategoryController.delete);
 
 fastify.get('/employees', EmployeeController.index);
 fastify.get('/employees/:id', EmployeeController.show);
-fastify.post('/employees', EmployeeController.store);
+
+fastify.post('/employees', {
+  onRequest: [privateRoutes]
+}, EmployeeController.store);
+
 fastify.post('/employees/login', EmployeeController.login);
 fastify.put('/employees/:id', EmployeeController.update);
 fastify.delete('/employees/:id', EmployeeController.delete);

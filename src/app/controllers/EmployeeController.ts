@@ -35,6 +35,12 @@ class EmployeeController {
       date_fired, restaurant_id
     } = request.body;
 
+    const userExist = await EmployeeRepository.findByEmail(email);
+
+    if (userExist) {
+      return reply.status(409).send({ message: 'Usuário já cadastrado' });
+    }
+
     const hashPassword = await bcrypt.hash(password, saltPassword);
 
     await EmployeeRepository.register({
@@ -60,7 +66,7 @@ class EmployeeController {
       return reply.status(401).send({ message: 'Senha incorreta' });
     }
 
-    const token = jwt.sign({ name, email, password }, process.env.SECRET_KEY, {
+    const token = jwt.sign({ name, email, role: employee.role }, process.env.SECRET_KEY, {
       expiresIn: '5min'
     });
 
