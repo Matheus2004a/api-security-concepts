@@ -39,7 +39,7 @@ fastify.get('/employees', EmployeeController.index);
 fastify.get('/employees/:id', EmployeeController.show);
 
 fastify.post('/employees', {
-  onRequest: [privateRoutes]
+  preHandler: privateRoutes
 }, EmployeeController.store);
 
 fastify.post('/employees/login', EmployeeController.login);
