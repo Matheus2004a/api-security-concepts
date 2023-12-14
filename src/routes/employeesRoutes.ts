@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify';
 import EmployeeController from '../app/controllers/EmployeeController';
-import { privateRoutes } from '../app/plugins/privateRoutes';
+import { privateRoutes } from './privateRoutes';
 
 export async function employeesRoutes(fastify: FastifyInstance) {
   fastify.get('/employees', EmployeeController.index);
@@ -11,6 +11,12 @@ export async function employeesRoutes(fastify: FastifyInstance) {
   }, EmployeeController.store);
 
   fastify.post('/employees/login', EmployeeController.login);
-  fastify.put('/employees/:id', EmployeeController.update);
-  fastify.delete('/employees/:id', EmployeeController.delete);
+
+  fastify.put('/employees/:id', {
+    preHandler: privateRoutes
+  }, EmployeeController.update);
+
+  fastify.delete('/employees/:id', {
+    preHandler: privateRoutes
+  }, EmployeeController.delete);
 }

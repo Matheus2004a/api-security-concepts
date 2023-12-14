@@ -1,10 +1,20 @@
 import { FastifyInstance } from 'fastify';
 import RestaurantController from '../app/controllers/RestaurantController';
+import { privateRoutes } from './privateRoutes';
 
 export async function restaurantsRoutes(fastify: FastifyInstance) {
   fastify.get('/restaurants', RestaurantController.index);
   fastify.get('/restaurants/:id', RestaurantController.show);
-  fastify.post('/restaurants', RestaurantController.store);
-  fastify.patch('/restaurants/:id', RestaurantController.update);
-  fastify.delete('/restaurants/:id', RestaurantController.delete);
+
+  fastify.post('/restaurants', {
+    preHandler: privateRoutes
+  }, RestaurantController.store);
+
+  fastify.patch('/restaurants/:id', {
+    preHandler: privateRoutes
+  }, RestaurantController.update);
+
+  fastify.delete('/restaurants/:id', {
+    preHandler: privateRoutes
+  }, RestaurantController.delete);
 }
