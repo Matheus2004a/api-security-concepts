@@ -1,4 +1,5 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
+import { IProduct } from '../../types/Product';
 import ProductsRepository from '../repositories/ProductsRepository';
 
 class ProductsController {
@@ -12,7 +13,7 @@ class ProductsController {
     return restaurants;
   }
 
-  async show(request: FastifyRequest, reply: FastifyReply) {
+  async show(request: FastifyRequest<{ Params: { id: string } }>, reply: FastifyReply) {
     const { id } = request.params;
 
     const product = await ProductsRepository.findById(id);
@@ -24,7 +25,7 @@ class ProductsController {
     return product;
   }
 
-  async store(request: FastifyRequest, reply: FastifyReply) {
+  async store(request: FastifyRequest<{ Body: IProduct }>, reply: FastifyReply) {
     const { name, price, category_id, restaurant_id } = request.body;
 
     await ProductsRepository.register({ name, price, category_id, restaurant_id });
@@ -32,7 +33,7 @@ class ProductsController {
     reply.status(201).send({ message: 'Produto cadastrado com sucesso' });
   }
 
-  async update(request: FastifyRequest, reply: FastifyReply) {
+  async update(request: FastifyRequest<{ Params: { id: string }, Body: IProduct }>, reply: FastifyReply) {
     const { id } = request.params;
     const { name, price, category_id, restaurant_id } = request.body;
 
@@ -47,7 +48,7 @@ class ProductsController {
     reply.status(202).send({ message: 'Produto atualizado com sucesso' });
   }
 
-  async delete(request: FastifyRequest, reply: FastifyReply) {
+  async delete(request: FastifyRequest<{ Params: { id: string } }>, reply: FastifyReply) {
     const { id } = request.params;
 
     const product = await ProductsRepository.findById(id);
