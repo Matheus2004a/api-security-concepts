@@ -1,6 +1,5 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 
-import { IRestaurant } from '../../types/Restaurant';
 import RestaurantRepository from '../repositories/RestaurantRepository';
 
 class RestaurantController {
@@ -14,7 +13,7 @@ class RestaurantController {
     return restaurants;
   }
 
-  async show(request: FastifyRequest<{ Params: { id: string } }>, reply: FastifyReply) {
+  async show(request: FastifyRequest, reply: FastifyReply) {
     const { id } = request.params;
 
     const restaurant = await RestaurantRepository.findById(id);
@@ -26,7 +25,7 @@ class RestaurantController {
     return restaurant;
   }
 
-  async store(request: FastifyRequest<{ Body: IRestaurant }>, reply: FastifyReply) {
+  async store(request: FastifyRequest, reply: FastifyReply) {
     const {
       name, street, street_number,
       street_comp, date_open, date_close
@@ -40,7 +39,7 @@ class RestaurantController {
     reply.status(201).send({ message: 'Restaurante cadastrado com sucesso' });
   }
 
-  async update(request: FastifyRequest<{ Params: { id: string }, Body: IRestaurant }>, reply: FastifyReply) {
+  async update(request: FastifyRequest, reply: FastifyReply) {
     const { id } = request.params;
 
     const data = request.body;
@@ -56,7 +55,7 @@ class RestaurantController {
     reply.status(202).send({ message: 'Restaurante atualizado com sucesso' });
   }
 
-  async delete(request: FastifyRequest<{ Params: { id: string } }>, reply: FastifyReply) {
+  async delete(request: FastifyRequest, reply: FastifyReply) {
     const { id } = request.params;
 
     const restaurant = await RestaurantRepository.findById(id);

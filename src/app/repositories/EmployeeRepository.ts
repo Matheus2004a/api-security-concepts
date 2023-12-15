@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 
 import { prisma } from '../../lib/prisma';
-import { IEmployee, IEmployeeUpdate } from '../../types/Employee';
+import { IEmployee } from '../../types/Employee';
 
 class EmployeeRepository {
   async listAll() {
@@ -42,7 +42,7 @@ class EmployeeRepository {
     return newCategory;
   }
 
-  async update(id: string, data: IEmployeeUpdate) {
+  async update(id: string, data: IEmployee) {
     const employeeUpdated = await prisma.tbl_employees.update({
       where: { id },
       data: {

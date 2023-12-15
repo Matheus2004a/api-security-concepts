@@ -7,7 +7,3 @@ export interface IEmployee {
   date_fired?: Date;
   restaurant_id: string;
 }
-
-export type IEmployeeLogin = Pick<IEmployee, 'email' | 'password'>
-
-export type IEmployeeUpdate = Omit<IEmployee, 'password'>

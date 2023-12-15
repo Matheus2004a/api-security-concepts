@@ -2,7 +2,6 @@ import bcrypt from 'bcrypt';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import jwt from 'jsonwebtoken';
 
-import { IEmployee, IEmployeeLogin, IEmployeeUpdate } from '../../types/Employee';
 import EmployeeRepository from '../repositories/EmployeeRepository';
 
 const saltPassword = 10;
@@ -18,7 +17,7 @@ class EmployeeController {
     return employees;
   }
 
-  async show(request: FastifyRequest<{ Params: { id: string } }>, reply: FastifyReply) {
+  async show(request: FastifyRequest, reply: FastifyReply) {
     const { id } = request.params;
 
     const employee = await EmployeeRepository.findById(id);
@@ -30,7 +29,7 @@ class EmployeeController {
     return employee;
   }
 
-  async store(request: FastifyRequest<{ Body: IEmployee }>, reply: FastifyReply) {
+  async store(request: FastifyRequest, reply: FastifyReply) {
     const {
       name, email, password, role,
       date_fired, restaurant_id
@@ -52,7 +51,7 @@ class EmployeeController {
     reply.status(201).send({ message: 'Funcionário criado com sucesso' });
   }
 
-  async login(request: FastifyRequest<{ Body: IEmployeeLogin }>, reply: FastifyReply) {
+  async login(request: FastifyRequest, reply: FastifyReply) {
     const { email, password } = request.body;
 
     const employee = await EmployeeRepository.findByEmail(email);
@@ -74,10 +73,7 @@ class EmployeeController {
     reply.send({ token, message: 'Funcionário logado com sucesso' });
   }
 
-  async update(
-    request: FastifyRequest<{ Params: { id: string }, Body: IEmployeeUpdate }>,
-    reply: FastifyReply
-  ) {
+  async update(request: FastifyRequest, reply: FastifyReply) {
     const { id } = request.params;
 
     const { name, email, role, date_hired, date_fired, restaurant_id } = request.body;
@@ -96,7 +92,7 @@ class EmployeeController {
     reply.status(202).send({ message: 'Funcionário atualizado com sucesso' });
   }
 
-  async delete(request: FastifyRequest<{ Params: { id: string } }>, reply: FastifyReply) {
+  async delete(request: FastifyRequest, reply: FastifyReply) {
     const { id } = request.params;
 
     const employee = await EmployeeRepository.findById(id);
