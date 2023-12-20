@@ -17,6 +17,16 @@ class RestaurantRepository {
     return restaurant;
   }
 
+  async listProductsByRestaurantId(id: string) {
+    const products = await prisma.tbl_products.findMany({
+      where: {
+        tbl_restaurants_id: id
+      }
+    });
+
+    return products;
+  }
+
   async register(data: IRestaurant) {
     const newRestaurant = await prisma.tbl_restaurants.create({
       data: {
